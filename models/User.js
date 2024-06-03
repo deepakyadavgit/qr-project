@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   ownerFirstName: { type: String },
   ownerLastName: { type: String },
   googleLink: { type: String },
-  qrCode: { type: String, required: true },  // New field for QR code
+  qrCode: { type: String, required: true }, // New field for QR code
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model("User", UserSchema);
