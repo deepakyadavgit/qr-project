@@ -9,14 +9,19 @@ import categoryRoutes from './routes/categories.js';
 import itemRoutes from './routes/items.js';
 import feedbackRoutes from './routes/feedbacks.js';
 import menuRoutes from './routes/menu.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json({ limit: "16kb" }));
+// to encode the urls and limit the query size after request
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+
+app.use(express.static("public"))
+app.use(cookieParser());
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

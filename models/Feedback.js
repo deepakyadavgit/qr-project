@@ -1,11 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const FeedbackSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  date: { type: Date, default: Date.now },
-  message: { type: String, required: true },
-});
+const FeedbackSchema = new Schema(
+  {
+    message: { type: String, required: true },
+    email: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export default mongoose.model('Feedback', FeedbackSchema);
+export default mongoose.model("Feedback", FeedbackSchema);

@@ -1,28 +1,37 @@
-import express from 'express';
-import Item from '../models/Item.js';
+import express from "express";
+import {
+  applyDiscount,
+  createItem,
+  getAllItems,
+  getEnabledItems,
+  markItemsTodaysSpecial,
+  menuPreview,
+  updateItems,
+} from "../controllers/itemcontroller.js";
+import { upload } from "../middlewares/multer.middleware.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
 // Get all items for a user
-router.get('/:userId', async (req, res) => {
-  try {
-    const items = await Item.find({ user: req.params.userId }).populate('category');
-    res.json(items);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+router.get("/:userId", authMiddleware, getEnabledItems);
+
+// Get all items for a user
+router.get("/all/:userId", authMiddleware, getAllItems);
 
 // Create a new item
-router.post('/', async (req, res) => {
-  const { user, category, name, description, type, keyIngredients, pricing, images } = req.body;
-  try {
-    const newItem = new Item({ user, category, name, description, type, keyIngredients, pricing, images });
-    await newItem.save();
-    res.json(newItem);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+router.post("/", upload.array("images"), authMiddleware, createItem);
+
+// Update list of items
+router.put("/:userId", authMiddleware, updateItems);
+
+// Mark items as today's special
+router.put("/todaysSpecial/:userId", authMiddleware, markItemsTodaysSpecial);
+
+// Get menu preview
+router.get("/menuPreview/:userId", authMiddleware, menuPreview);
+
+// Apply discount to an item
+router.put("/applyDiscount/:userId", authMiddleware, applyDiscount);
 
 export default router;

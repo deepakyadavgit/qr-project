@@ -10,6 +10,8 @@ const UserSchema = new Schema({
   ownerLastName: { type: String },
   googleLink: { type: String },
   qrCode: { type: String, required: true }, // New field for QR code
+},{
+  timestamps: true,
 });
 
 export default mongoose.model("User", UserSchema);

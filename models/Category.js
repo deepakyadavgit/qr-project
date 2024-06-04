@@ -1,10 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const CategorySchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  name: { type: String, required: true },
-});
+const CategorySchema = new Schema(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    name: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export default mongoose.model('Category', CategorySchema);
+export default mongoose.model("Category", CategorySchema);
